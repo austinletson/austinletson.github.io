@@ -44,22 +44,29 @@
     <header class="layui-header layui-bg-cyan">
 
     
-    
-    <a style="font-size:18px" class="nav-self-logo" href="/">
+   
+
+<style>
+@media screen and (max-width: 768px) {
+    .nav-self-logo {
+        visibility:hidden;
+    }
+}
+</style>
+
+    <a class="nav-self-logo" href="/">
         &#34;Like punning, programming is a play on words.&#34; -Alan Perlis
     </a>
 
     <ul class="layui-nav layui-layout-right layui-bg-cyan" lay-filter="">
         
-        
+        <li class="layui-nav-item" id="nav_big"><a href="/">Home</a></li>
         <li class="layui-nav-item" id="nav_big"><a href="/post/">Posts</a></li>
         
 
         
             
                 <li class="layui-nav-item" id="nav_big"><a href="/projects/">Projects</a></li>
-            
-                <li class="layui-nav-item" id="nav_big"><a href="/">Home</a></li>
             
         
 
@@ -76,8 +83,6 @@
 
                 
                     <dd><a href="/projects/">Projects</a></dd>
-                
-                    <dd><a href="/">Home</a></dd>
                 
             </dl>
         </li>
