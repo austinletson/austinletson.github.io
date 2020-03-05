@@ -6,7 +6,7 @@
     <description>Recent content in vim on &#34;Like punning, programming is a play on words.&#34; -Alan Perlis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Feb 2020 20:00:30 -0500</lastBuildDate>
+    <lastBuildDate>Thu, 05 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://austinletson.github.io/tags/vim/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,10 +14,10 @@
     <item>
       <title>Thinking in Letters: Why Word Processors are Anti-Words</title>
       <link>https://austinletson.github.io/post/thinking-in-letters/</link>
-      <pubDate>Thu, 27 Feb 2020 20:00:30 -0500</pubDate>
+      <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://austinletson.github.io/post/thinking-in-letters/</guid>
-      <description>Word processors have monopolized the domain of text composition for the last quarter century. At their core, these programs involve text entry at the cursor, but with this function comes a wrapper of features: formatting, grammar and spell checking, support for annotation. The core however is simple: move the cursor with the mouse or the arrow keys and type letters at the cursor. Although some word processors promise features which approach a publishing suite, the average use case is the simple entry and manipulation of text.</description>
+      <description>Word processors have monopolized the domain of text composition for the last quarter century. At their core, these programs involve text entry at the cursor, but with this function comes a wrapper of features: formatting, grammar and spell checking, support for annotation. However, the essential functionality is simple: move the cursor with the mouse or the arrow keys and type or delete letters at the cursor. Although some word processors promise features which approach a publishing suite, the average use case is the simple entry and manipulation of text.</description>
     </item>
     
   </channel>
