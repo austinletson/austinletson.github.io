@@ -1,0 +1,169 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Austin Letson</title>
+
+    
+    
+    <meta content="editors, vim, google docs, microsoft word" name="keywords">
+    
+    <meta content="&#34;Like punning, programming is a play on words.&#34; -Alan Perlis - Word processors have monopolized the domain of text composition for the last quarter century. At their core, these programs involve text entry at the cursor, but with this function comes a wrapper of features: formatting, grammar and spell checking, support for annotation. The core however is simple: move the cursor with the mouse or the arrow keys and type letters at the cursor. Although some word processors promise features which approach a publishing suite, the average use case is the simple entry and manipulation of text." name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+
+    
+
+    
+
+    
+    
+    <script type="text/javascript" async
+        src="/mathjax-3.0.0/tex-mml-chtml.js">
+    </script>
+    
+
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/self/css/default.css">
+    <script src="/layui/layui.js"></script>
+
+
+    <link rel="stylesheet" async href="/self/css/markdown.min.css">
+    <link rel="stylesheet" async href="/self/css/gallery.css">
+    <link rel="stylesheet" async href="/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="/self/js/lazysizes.min.js" async></script></head>
+
+<body>
+    
+    <header class="layui-header layui-bg-cyan">
+
+    
+   
+
+<style>
+@media screen and (max-width: 768px) {
+    .nav-self-logo {
+        visibility:hidden;
+    }
+}
+</style>
+
+    <a class="nav-self-logo" href="/">
+        &#34;Like punning, programming is a play on words.&#34; -Alan Perlis
+    </a>
+
+    <ul class="layui-nav layui-layout-right layui-bg-cyan" lay-filter="">
+        
+        <li class="layui-nav-item" id="nav_big"><a href="/">Home</a></li>
+        <li class="layui-nav-item" id="nav_big"><a href="/post/">Posts</a></li>
+        
+
+        
+            
+                <li class="layui-nav-item" id="nav_big"><a href="/projects/">Projects</a></li>
+            
+        
+
+        
+        <li class="layui-nav-item" id="nav_small">
+            <a href="javascript:;">
+                <i class="layui-icon layui-icon-app" style="font-size: 24px;"></i>
+            </a>
+
+            <dl class="layui-nav-child">
+                
+                <dd><a href="/post/">Posts</a></dd>
+                
+
+                
+                    <dd><a href="/projects/">Projects</a></dd>
+                
+            </dl>
+        </li>
+    </ul>
+</header>
+
+<script>
+layui.use('element', function(){
+  var element = layui.element;
+});
+</script>
+
+        <div id="content" style="min-height:80%">
+<div class="layui-container" style="margin-bottom: 10px">
+    
+
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+            <div class="layui-card single-card">
+                <br />
+                <blockquote class="layui-elem-quote markdown-body single-title" >
+                    <h1>Thinking in Letters: Why Word Processors are Anti-Words</h1>
+                    <h3 style="margin-top:10px; margin-bottom:10px"> 
+    
+    <span>2020-02-27</span>
+
+    
+    
+    
+        <a href="/tags/editors">
+            <span class="layui-badge" style="vertical-align: 2px;">editors</span>
+        </a>
+    
+        <a href="/tags/vim">
+            <span class="layui-badge" style="vertical-align: 2px;">vim</span>
+        </a>
+    
+        <a href="/tags/google-docs">
+            <span class="layui-badge" style="vertical-align: 2px;">google docs</span>
+        </a>
+    
+        <a href="/tags/microsoft-word">
+            <span class="layui-badge" style="vertical-align: 2px;">microsoft word</span>
+        </a>
+    
+</h3>
+
+                </blockquote>
+                <div class="layui-card-body markdown-body single-content">
+                    <p>Word processors have monopolized the domain of text composition for the last quarter century. At their core, these programs involve text entry at the cursor, but with this function comes a wrapper of features: formatting, grammar and spell checking, support for annotation. The core however is simple: move the cursor with the mouse or the arrow keys and type letters at the cursor. Although some word processors promise features which approach a publishing suite, the average use case is the simple entry and manipulation of text.</p>
+<p><img src="/img/officexp_clippy.png" alt="Microsoft Word"></p>
+<p>The largest unit of text that Google Docs understands is a sentence. For the most, part sophisticated spelling and grammar checking tools. Where docs fails is the user interaction with the text. We don’t think in letters we think in sentences and paragraphs, but we edit text in characters. Word processing forces the brain to descend to the level of the character while editing the document.</p>
+<p>Language is only reductively defined by a sequence of characters. We are all authors and we think in words and sentences. Vim addresses the text document completely and allows the author to edit the text with the same patterns which they produce language naturally.</p>
+<p>There is a great tradition of editors which hold interfaces close to human understanding of text. Since the inception of the personal computer, users have stretched the conceptual bounds of editing text and continued to hone the tools which they use.</p>
+<p>The tool which we will examine today is Vim. It has been around for decades and has a loyal userbase. Vim is an idiosyncratic editor which focuses on efficient text editing and conferability. Vim users use the keyboard to move the cursor around the document and make changes to the text. These commands rarely focus on a single character</p>
+<p><img src="/img/vim-5-1.png" alt="Vim"></p>
+<p>Take this passage as an example</p>
+<p>“The killer was wearing a blue ski mask. We&rsquo;ll never catch him now,&rdquo; said Liam. He held his face in his hands.</p>
+<p>“Not on my watch,” answered Sheila.</p>
+<p>Say an author wants to delete the sentence after Liam&rsquo;s dialogue. From the beginning of the line, the author can press ) to move forward a sentence and then press the inputs &ldquo;das&rdquo; (Delete Around Sentence) to delete the sentence. In Google docs the author must select the text with the mouse and use the backspace to perform the same action. At first these inputs may seem similar, however Vim&rsquo;s syntax reflects the underling structure of the document and reflects the author&rsquo;s specific intention.</p>
+<p>Next the author wants to change Sheila&rsquo;s dialogue to avoid cliché. The input di&rdquo; (Delete In Quote) will delete the contents of the quote but not the quotation marks. Vim understands the difference between the contents of the quote and the full clause. This distinction is subtle but defines an important difference in the authors intention.</p>
+<p>Now what is the meaning behind the syntax of these inputs? Vim commands consist of nouns and verbs. Nouns are logical text objects which represent well defined text strings that exist in a document. For instance a word is a text object (characters enclosed in two spaces), a quotation is a text object (a set of words enclosed in quotation marks). There are also text objects for sentences and paragraphs The community around Vim constantly adds novel text objects to Vim. You can install text plugins that support many parts of English syntax and even define your own. An example of a complex text object would be a subordinate clause, defined by the text between a subordinate conjunction and a period or comma. I am not aware if this text object exists in Vim but because Vim is entirely extensible such a text object could be easily added.</p>
+<p>In order to tap the immense power of text objects we will combine them with Vim verbs or also known as operators. Operators describe actions to perform on a text object.  Deletion, indenting, and changing case are examples of operators. A more powerful example is the ability to surround a text object with an arbitrary character.</p>
+<p>The power comes from composing verbs and nouns to make precise and sophisticated changes to text documents. Below are several increasingly powerful examples.</p>
+<p>You can compose the operator &lsquo;d&rsquo; for delete and the text object &lsquo;w&rsquo; for word as dw to delete word at your cursor. The command requires the cursor to be pointed at the start of the word, if you want to delete the word from any location you must diw.</p>
+<p>To delete the contents of a quotation you can compose delete and the quotation text object di&rdquo;. This command will leave the quotation. If you want to delete the quotation and the quotation marks you can compose da&rdquo;.</p>
+<p>Almost all documents in 2020 are composed at our fingertips on a keyboard. This process should be a skill to hone and improve throughout life. All authors should strive to become one with the editor. Sadly the ceiling for document composition and editing in common tools such as Microsoft Word and Google Docs limits author&rsquo;s connection to the text. Vim provides an expressive tool set to compose and edit documents in plain text and an interface for community members to extend its functionality.</p>
+<p>Notes:</p>
+<p>There are some simplifications I have made in an effort to avoid over explaining Vim&rsquo;s features. The reader will find that in practice Vim is far more powerful than this article could ever articulate. I urge the reader to try Vim. There are plenty of stellar online resources to get started.</p>
+<p>And for the sake of completeness, I should add that there exist many plain text formatting tools which support everything from font changes to sophisticated reader-facing formatting.</p>
+</div>
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+
+
+        </div><footer>
+    
+    
+    <div class="layui-container">
+        <p class="copyright">Copyright © 2020, Austin Letson with help from the Hugo Authors; all rights reserved.</p>
+    </div>
+</footer>
+</body>
+</html>

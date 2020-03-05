@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on &#34;Like pasasfunning, programming is a play on words.&#34; -Alan Perlis</title>
+    <title>Tags on &#34;Like punning, programming is a play on words.&#34; -Alan Perlis</title>
     <link>https://austinletson.github.io/tags/</link>
-    <description>Recent content in Tags on &#34;Like pasasfunning, programming is a play on words.&#34; -Alan Perlis</description>
+    <description>Recent content in Tags on &#34;Like punning, programming is a play on words.&#34; -Alan Perlis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Thu, 27 Feb 2020 20:00:30 -0500</lastBuildDate>
     
 	<atom:link href="https://austinletson.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>editors</title>
+      <link>https://austinletson.github.io/tags/editors/</link>
+      <pubDate>Thu, 27 Feb 2020 20:00:30 -0500</pubDate>
+      
+      <guid>https://austinletson.github.io/tags/editors/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>google docs</title>
+      <link>https://austinletson.github.io/tags/google-docs/</link>
+      <pubDate>Thu, 27 Feb 2020 20:00:30 -0500</pubDate>
+      
+      <guid>https://austinletson.github.io/tags/google-docs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>microsoft word</title>
+      <link>https://austinletson.github.io/tags/microsoft-word/</link>
+      <pubDate>Thu, 27 Feb 2020 20:00:30 -0500</pubDate>
+      
+      <guid>https://austinletson.github.io/tags/microsoft-word/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vim</title>
+      <link>https://austinletson.github.io/tags/vim/</link>
+      <pubDate>Thu, 27 Feb 2020 20:00:30 -0500</pubDate>
+      
+      <guid>https://austinletson.github.io/tags/vim/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>
