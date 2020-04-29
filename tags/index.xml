@@ -6,10 +6,46 @@
     <description>Recent content in Tags on &#34;Like punning, programming is a play on words.&#34; -Alan Perlis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 Apr 2020 14:09:05 -0400</lastBuildDate>
     
 	<atom:link href="https://austinletson.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>editors</title>
+      <link>https://austinletson.github.io/tags/editors/</link>
+      <pubDate>Wed, 29 Apr 2020 14:09:05 -0400</pubDate>
+      
+      <guid>https://austinletson.github.io/tags/editors/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>google docs</title>
+      <link>https://austinletson.github.io/tags/google-docs/</link>
+      <pubDate>Wed, 29 Apr 2020 14:09:05 -0400</pubDate>
+      
+      <guid>https://austinletson.github.io/tags/google-docs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>microsoft word</title>
+      <link>https://austinletson.github.io/tags/microsoft-word/</link>
+      <pubDate>Wed, 29 Apr 2020 14:09:05 -0400</pubDate>
+      
+      <guid>https://austinletson.github.io/tags/microsoft-word/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vim</title>
+      <link>https://austinletson.github.io/tags/vim/</link>
+      <pubDate>Wed, 29 Apr 2020 14:09:05 -0400</pubDate>
+      
+      <guid>https://austinletson.github.io/tags/vim/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>boards</title>
@@ -44,42 +80,6 @@
       <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://austinletson.github.io/tags/dust-jackets/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>editors</title>
-      <link>https://austinletson.github.io/tags/editors/</link>
-      <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://austinletson.github.io/tags/editors/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>google docs</title>
-      <link>https://austinletson.github.io/tags/google-docs/</link>
-      <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://austinletson.github.io/tags/google-docs/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>microsoft word</title>
-      <link>https://austinletson.github.io/tags/microsoft-word/</link>
-      <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://austinletson.github.io/tags/microsoft-word/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>vim</title>
-      <link>https://austinletson.github.io/tags/vim/</link>
-      <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://austinletson.github.io/tags/vim/</guid>
       <description></description>
     </item>
     
