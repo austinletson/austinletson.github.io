@@ -6,20 +6,10 @@
     <description>Recent content in google docs on &#34;Like punning, programming is a play on words.&#34; -Alan Perlis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Apr 2020 14:09:05 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 05 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://austinletson.github.io/tags/google-docs/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Express Yourself! The Power of Regular Expressions in Vim</title>
-      <link>https://austinletson.github.io/post/expressing-yourself/</link>
-      <pubDate>Wed, 29 Apr 2020 14:09:05 -0400</pubDate>
-      
-      <guid>https://austinletson.github.io/post/expressing-yourself/</guid>
-      <description>Sometimes we know what we want to do with text even if we don&amp;rsquo;t know what the text is.
-Regular expressions are an important feature of many tools (programing languages, command line tools, etc.), but they play an especially important role in Vim. Text in Vim is first class, so all of Vim&amp;rsquo;s features should ultimately serve the purpose of editing text. Here we will explore some examples where regular expressions serve Vim well in this effort.</description>
-    </item>
     
     <item>
       <title>Thinking in Letters: Why Word Processors are Anti-words</title>
