@@ -189,7 +189,7 @@ Lettuce-<strong>Produce</strong> (Whole Foods)</p>
 <p>Here we match on the on the word following a hyphen and our list
 is sorted! But this list is still of little use since the items are distributed
 across three grocery stores. The following command can help us out.</p>
-<pre><code>:sort /(.\*)/ r
+<pre><code>:sort /(.*)/ r
 </code></pre><blockquote>
 <p>Salmon-Fish <strong>(Fresh Market)</strong><br>
 Trout-Fish <strong>(Fresh Market)</strong><br>
@@ -214,11 +214,12 @@ line of <em>Pride and Prejudice</em> and has erroneously repeated two words.</p>
 possession of a <strong>good good</strong> fortune must be in want of a wife.</p>
 </blockquote>
 <p>Now after completing this timeless sentence, Ms. Austen starts a search in
-Vim and with the following regular expression matches the repeated words.</p>
-<pre><code>\(\&lt;\w\+\&gt;\) \1
+Vim and with the following regular expression matches the repeated words.
+dockhad</p>
+<pre><code>\&lt;\(\w\+\) \1\&gt;
 </code></pre><p>Here she uses a capture group and a backreference to identify repeated
 words and quickly with a substitution&hellip;</p>
-<pre><code>%s/\(\&lt;\w\+\&gt;\) \1/\1/g
+<pre><code>%s/\&lt;\(\w\+\) \1\&gt;/\1/g
 </code></pre><blockquote>
 <p>It is a <strong>truth</strong> universally acknowledged, that a single man in possession of a <strong>good</strong> fortune must be in want of a wife.</p>
 </blockquote>
@@ -227,9 +228,9 @@ words and quickly with a substitution&hellip;</p>
 words that appear within a given distance of another, or in this case of
 themselves. Here is an example in the opening lines of <em>All the Pretty
 Horses</em>.</p>
-<pre><code>\(\&lt;\w\+\&gt;\)\(.\{1,50}\1\)\@=
+<pre><code>\&lt;\(\w\+\)\&gt;\(.\{0,50}\&lt;\1\&gt;\)\@=
 </code></pre><blockquote>
-<p>The <strong>candleflame</strong> and the image of the <strong>candleflame</strong> caught in the
+<p>The <strong>candleflame</strong> and the image of the candleflame caught in the
 pierglass and twisted and righted when he entered the hall and again
 when he shut the door.</p>
 </blockquote>
@@ -241,6 +242,9 @@ Vim we include <strong>@=</strong> at the end of a capture group to signify
 a lookahead.</p>
 <p>Unlike the first case this by no means indicates a typo and as in the
 sentence above, it is often to great affect.</p>
+<p>As an aside, &lsquo;and&rsquo; and &lsquo;the&rsquo; are also found by this pattern in the above
+example. I think any reasonable implimentation of this feature would
+exclude articles and the like.</p>
 <h2 id="vim-rocks">Vim Rocks</h2>
 <p>In closing, Vim rocks. And regular expressions rock. So they go great
 together.</p>
