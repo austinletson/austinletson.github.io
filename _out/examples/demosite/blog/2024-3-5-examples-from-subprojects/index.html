@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Examples from Subprojects — Verso </title><link rel="stylesheet" href="../../static/style.css">
+    <style>
+
+
+.hl.lean {
+  white-space: pre;
+}
+
+.hl.lean .keyword {
+  font-weight : bold;
+}
+
+.hl.lean .var {
+  font-style: italic;
+  position: relative;
+}
+
+.hover-container {
+  width: 0;
+  height: 0;
+  position: relative;
+  display: inline;
+}
+
+.hl.lean .hover-info {
+  white-space: normal;
+}
+
+.hl.lean .token .hover-info {
+  display: none;
+  position: absolute;
+  background-color: #e5e5e5;
+  border: 1px solid black;
+  padding: 0.5em;
+  z-index: 300;
+  font-size: inherit;
+}
+
+.hl.lean .has-info .hover-info.messages {
+  max-height: 10em;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  background-color: #e5e5e5;
+}
+
+.hl.lean .hover-info code {
+  white-space: pre;
+}
+
+.hl.lean .hover-info.messages > code {
+  padding: 0.5em;
+  display: block;
+  width: fit-content;
+}
+
+.hl.lean .hover-info.messages > code:only-child {
+  margin: 0;
+}
+
+.hl.lean .hover-info.messages > code {
+  margin: 0.1em;
+}
+
+.hl.lean .hover-info.messages > code:not(:first-child) {
+  margin-top: 0em;
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info:hover > .hover-container > .hover-info:not(.tactic *),
+  .hl.lean .tactic:has(> .tactic-toggle:checked) .has-info:hover > .hover-container > .hover-info,
+  .hl.lean .token:hover > .hover-container > .hover-info:not(.has-info *):not(.tactic *),
+  .hl.lean .tactic:has(> .tactic-toggle:checked) .token:hover > .hover-container > .hover-info:not(.has-info *) {
+    display: inline-block;
+    position: absolute;
+    top: 1em;
+    font-weight: normal;
+    font-style: normal;
+    width: min-content;
+  }
+}
+
+.hl.lean.block {
+  display: block;
+}
+
+.hl.lean.inline {
+  display: inline;
+}
+
+.hl.lean .token {
+  transition: all 0.25s; /* Slight fade for highlights */
+}
+
+@media (hover: hover) {
+  .hl.lean .token.binding-hl, .hl.lean .literal.string:hover {
+    background-color: #eee;
+    border-radius: 2px;
+    transition: none;
+  }
+}
+
+
+.hl.lean .has-info {
+  text-decoration-style: wavy;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.1rem;
+}
+
+.hl.lean .has-info .hover-info {
+  display: none;
+  position: absolute;
+  transform: translate(0.25rem, 0.3rem);
+  border: 1px solid black;
+  padding: 0.5em;
+  z-index: 400;
+  text-align: left;
+}
+
+.hl.lean .has-info.error {
+  text-decoration-color: red;
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info.error:hover {
+    background-color: #ffb3b3;
+  }
+}
+
+.hl.lean .has-info > .hover-container > .hover-info > code.error {
+  background-color: #ffb3b3;
+}
+
+.error pre {
+    color: red;
+}
+
+.hl.lean .has-info.warning {
+  text-decoration-color: yellow;
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info.warning:hover {
+    background-color: yellow;
+  }
+}
+
+.hl.lean .has-info .hover-info.messages > code.warning {
+  background-color: yellow;
+}
+
+.hl.lean .has-info.info {
+  text-decoration-color: blue;
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info.info:hover {
+    background-color: #4777ff;
+  }
+}
+
+
+.hl.lean .has-info .hover-info.messages > code.info {
+  background-color: #4777ff;
+}
+
+.hl.lean div.docstring {
+  font-family: sans-serif;
+  white-space: normal;
+  width: max-content;
+  max-width: 40em;
+}
+
+.hl.lean div.docstring > :last-child {
+  margin-bottom: 0;
+}
+
+.hl.lean .hover-info .sep {
+  display: block;
+  width: auto;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0;
+  height: 1px;
+  border-top: 1px solid #ccc;
+}
+
+.hl.lean code {
+  font-family: monospace;
+}
+
+.hl.lean .tactic-state {
+  display: none;
+  position: relative;
+  left: 2em;
+  width: fit-content;
+  border: 1px solid #888888;
+  border-radius: 0.1em;
+  padding: 0.5em;
+  font-family: sans-serif;
+  background-color: #ffffff;
+  z-index: 200;
+}
+
+.hl.lean .tactic {
+  position: relative;
+}
+
+.hl.lean .tactic-toggle:checked ~ .tactic-state {
+  display: block;
+}
+
+@media (hover: hover) {
+  .hl.lean .tactic:hover > .tactic-toggle:not(:checked) ~ .tactic-state {
+    display: block;
+    position: absolute;
+    left: 0;
+    transform: translate(0.25rem, 0);
+    z-index: 250;
+  }
+}
+
+.hl.lean .tactic > label {
+  position: relative;
+  transition: all 0.5s;
+}
+
+@media (hover: hover) {
+  .hl.lean .tactic > label:hover {
+    border-bottom: 1px dotted #bbbbbb;
+  }
+}
+
+.hl.lean .tactic-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.hl.lean .tactic > label::after {
+  content: "";
+  border: 1px solid #bbbbbb;
+  border-radius: 1em;
+  height: 0.25em;
+  vertical-align: middle;
+  width: 0.6em;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+  display: inline-block;
+  transition: all 0.5s;
+}
+
+@media (hover: hover) {
+  .hl.lean .tactic > label:hover::after {
+    border: 1px solid #aaaaaa;
+    background-color: #aaaaaa;
+    transition: all 0.5s;
+  }
+}
+
+.hl.lean .tactic > label:has(+ .tactic-toggle:checked)::after {
+  border: 1px solid #999999;
+  background-color: #999999;
+  transition: all 0.5s;
+}
+
+.hl.lean .tactic-state .goal + .goal {
+  margin-top: 1.5em;
+}
+
+.hl.lean .tactic-state summary {
+  margin-left: -0.5em;
+}
+
+.hl.lean .tactic-state details {
+  padding-left: 0.5em;
+}
+
+.hl.lean .tactic-state .goal-name::before {
+  font-style: normal;
+  content: "case ";
+}
+
+.hl.lean .tactic-state .goal-name {
+  font-style: italic;
+  font-family: monospace;
+}
+
+.hl.lean .tactic-state .hypotheses td.colon {
+  text-align: center;
+  min-width: 1em;
+}
+
+.hl.lean .tactic-state .hypotheses td.name {
+  text-align: right;
+}
+
+.hl.lean .tactic-state .hypotheses td.name,
+.hl.lean .tactic-state .hypotheses td.type,
+.hl.lean .tactic-state .conclusion .type {
+  font-family: monospace;
+}
+
+
+</style>
+<script>
+      
+window.onload = () => {
+    for (const c of document.querySelectorAll(".hl.lean .token")) {
+        if (c.dataset.binding != "") {
+            c.addEventListener("mouseover", (event) => {
+                const context = c.closest(".hl.lean").dataset.leanContext;
+                for (const example of document.querySelectorAll(".hl.lean")) {
+                    if (example.dataset.leanContext == context) {
+                        for (const tok of example.querySelectorAll(".token")) {
+                            if (c.dataset.binding == tok.dataset.binding) {
+                                tok.classList.add("binding-hl");
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        c.addEventListener("mouseout", (event) => {
+            for (const tok of document.querySelectorAll(".hl.lean .token")) {
+                tok.classList.remove("binding-hl");
+            }
+        });
+    }
+    /* Render docstrings */
+    for (const d of document.querySelectorAll("code.docstring, pre.docstring")) {
+        const str = d.innerText;
+        const html = marked.parse(str);
+        const rendered = document.createElement("div");
+        rendered.classList.add("docstring");
+        rendered.innerHTML = html;
+        d.parentNode.replaceChild(rendered, d);
+    }
+}
+
+</script>
+    
+<script>
+      
+document.addEventListener("DOMContentLoaded", () => {
+    for (const m of document.querySelectorAll(".math.inline")) {
+        katex.render(m.textContent, m, {throwOnError: false, displayMode: false});
+    }
+    for (const m of document.querySelectorAll(".math.display")) {
+        katex.render(m.textContent, m, {throwOnError: false, displayMode: true});
+    }
+});
+</script>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js" integrity="sha384-zbcZAIxlvJtNE3Dp5nxLXdXtXyxwOdnILY1TDPVmKFhl4r4nSUG1r8bcFXGVa4Te" crossorigin="anonymous"></script>
+    </head>
+  <body>
+    <header>
+      <div class="inner-wrap">
+        <a class="logo" href="../../"><img src="../../static/logo.png"></a><nav class="top" role="navigation">
+          <ol>
+            <li>
+              <a href="../../about">About Me</a></li>
+            <li>
+              <a href="../../blog">A Verso Blog</a></li>
+            </ol>
+          </nav>
+        </div>
+      </header>
+    <div class="main" role="main">
+      <div class="wrap">
+        <h1>
+          Examples from Subprojects</h1>
+        <div class="metadata">
+          <div class="authors">
+            <span class="author">Fictional Author</span><span class="author">Another Fictional Author</span></div>
+          <div class="date">
+            2024-3-5</div>
+          <ul class="categories">
+            <li>
+              <a href="../examples">Examples of Verso usage</a></li>
+            <li>
+              <a href="../other">Other content</a></li>
+            </ul>
+          </div>
+        <p>
+          This post demonstrates mixing highlighted examples from multiple Lean versions.</p>
+        <section>
+          <h2>
+            Foo</h2>
+          <p>
+            Here's a tree:</p>
+          <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.inductive-226">inductive<span class="hover-container"><span class="hover-info"><code class="docstring">In Lean, every concrete type other than the universes
+and every type constructor other than dependent arrows
+is an instance of a general family of type constructions known as inductive types.
+It is remarkable that it is possible to construct a substantial edifice of mathematics
+based on nothing more than the type universes, dependent arrow types, and inductive types;
+everything else follows from those.
+Intuitively, an inductive type is built up from a specified list of constructor.
+For example, `List α` is the list of elements of type `α`, and is defined as follows:
+```
+inductive List (α : Type u) where
+| nil
+| cons (head : α) (tail : List α)
+```
+A list of elements of type `α` is either the empty list, `nil`,
+or an element `head : α` followed by a list `tail : List α`.
+For more information about [inductive types](https://lean-lang.org/theorem_proving_in_lean4/inductive_types.html).
+</code></span></span></span> <span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Type u → Type u</code></span></span></span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.2">α<span class="hover-container"><span class="hover-info"><code>Type u</code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.type-247">Type<span class="hover-container"><span class="hover-info"><code class="docstring">A type universe. `Type ≡ Type 0`, `Type u ≡ Sort (u + 1)`. </code></span></span></span> <span class="unknown token" data-binding="">u</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">:</span> <span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.type-257">Type<span class="hover-container"><span class="hover-info"><code class="docstring">A type universe. `Type ≡ Type 0`, `Type u ≡ Sort (u + 1)`. </code></span></span></span> <span class="unknown token" data-binding="">u</span> <span class="keyword token" data-binding="kw-occ-null-264">where</span>
+  <span class="unknown token" data-binding="">|</span> <span class="const token" data-binding="const-Tree.leaf">leaf<span class="hover-container"><span class="hover-info"><code>Tree.leaf.{u} {α : Type u} : Tree α</code></span></span></span>
+  <span class="unknown token" data-binding="">|</span> <span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.7">left<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Type u → Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.2">α<span class="hover-container"><span class="hover-info"><code>Type u</code></span></span></span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.9">val<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.2">α<span class="hover-container"><span class="hover-info"><code>Type u</code></span></span></span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.11">right<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Type u → Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.2">α<span class="hover-container"><span class="hover-info"><code>Type u</code></span></span></span><span class="unknown token" data-binding="">)</span></code><p>
+            They can be flipped around with <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Tree.flip">Tree.flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span></code>:</p>
+          <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.def-361">def</span> <span class="const token" data-binding="const-flip">Tree.flip<span class="hover-container"><span class="hover-info"><code>{α : Type u_1} → Tree α → Tree α</code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.534">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span> <span class="unknown token" data-binding="">→</span> <span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.534">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span>
+  <span class="unknown token" data-binding="">|</span> <span class="const token" data-binding="const-Tree.leaf">.leaf<span class="hover-container"><span class="hover-info"><code>Tree.leaf.{u} {α : Type u} : Tree α</code></span></span></span> <span class="unknown token" data-binding="">=&gt;</span> <span class="const token" data-binding="const-Tree.leaf">.leaf<span class="hover-container"><span class="hover-info"><code>Tree.leaf.{u} {α : Type u} : Tree α</code></span></span></span>
+  <span class="unknown token" data-binding="">|</span> <span class="const token" data-binding="const-Tree.branch">.branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.572">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.573">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.574">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="unknown token" data-binding="">=&gt;</span> <span class="const token" data-binding="const-Tree.branch">.branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.574">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-flip">flip<span class="hover-container"><span class="hover-info"><code>{α : Type u_1} → Tree α → Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.573">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.572">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-flip">flip<span class="hover-container"><span class="hover-info"><code>{α : Type u_1} → Tree α → Tree α</code></span></span></span></code><p>
+            And subterms can be included: <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Tree.branch">.branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.574">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-flip">flip<span class="hover-container"><span class="hover-info"><code>{α : Type u_1} → Tree α → Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.573">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.572">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-flip">flip<span class="hover-container"><span class="hover-info"><code>{α : Type u_1} → Tree α → Tree α</code></span></span></span></code>.</p>
+          <p>
+            We can even prove things about them:</p>
+          <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.theorem-451">theorem</span> <span class="const token" data-binding="const-flip_flip_id">Tree.flip_flip_id<span class="hover-container"><span class="hover-info"><code>∀ {α : Type u_1} (t : Tree α), flip (flip t) = t</code></span></span></span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.671">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.668">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.671">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="unknown token" data-binding="">=</span> <span class="var token" data-binding="var-_uniq.671">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="unknown token" data-binding="">:=</span> <span class="tactic"><label for="tactic-state-1647517040024120497-512-514"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.byTactic-512">by<span class="hover-container"><span class="hover-info"><code class="docstring">`by tac` constructs a term of the expected type by running the tactic(s) `tac`. </code></span></span></span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-1647517040024120497-512-514"><div class="tactic-state"><div class="goal"><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.671">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.671">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.671">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></span></span></div></div></span>
+  <span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.induction-517">induction<span class="hover-container"><span class="hover-info"><code class="docstring">Assuming `x` is a variable in the local context with an inductive type,
+`induction x` applies induction on `x` to the main goal,
+producing one goal for each constructor of the inductive type,
+in which the target is replaced by a general instance of that constructor
+and an inductive hypothesis is added for each recursive argument to the constructor.
+If the type of an element in the local context depends on `x`,
+that element is reverted and reintroduced afterward,
+so that the inductive hypothesis incorporates that hypothesis as well.
+
+For example, given `n : Nat` and a goal with a hypothesis `h : P n` and target `Q n`,
+`induction n` produces one goal with hypothesis `h : P 0` and target `Q 0`,
+and one goal with hypotheses `h : P (Nat.succ a)` and `ih₁ : P a → Q a` and target `Q (Nat.succ a)`.
+Here the names `a` and `ih₁` are chosen automatically and are not accessible.
+You can use `with` to provide the variables names for each constructor.
+- `induction e`, where `e` is an expression instead of a variable,
+  generalizes `e` in the goal, and then performs induction on the resulting variable.
+- `induction e using r` allows the user to specify the principle of induction that should be used.
+  Here `r` should be a theorem whose result type must be of the form `C t`,
+  where `C` is a bound variable and `t` is a (possibly empty) sequence of bound variables
+- `induction e generalizing z₁ ... zₙ`, where `z₁ ... zₙ` are variables in the local context,
+  generalizes over `z₁ ... zₙ` before applying the induction but then introduces them in each goal.
+  In other words, the net effect is that each inductive hypothesis is generalized.
+- Given `x : Nat`, `induction x with | zero =&gt; tac₁ | succ x' ih =&gt; tac₂`
+  uses tactic `tac₁` for the `zero` case, and `tac₂` for the `succ` case.
+</code></span></span></span> <span class="var token" data-binding="var-_uniq.671">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.inductionAlts-529">with<span class="hover-container"><span class="hover-info"><code class="docstring">After `with`, there is an optional tactic that runs on all branches, and
+then a list of alternatives.
+</code></span></span></span>
+  <span class="unknown token" data-binding="">|</span> <span class="const token" data-binding="const-Tree.leaf">leaf<span class="hover-container"><span class="hover-info"><code>Tree.leaf.{u} {α : Type u} : Tree α</code></span></span></span> <span class="tactic"><label for="tactic-state-18438692745931140664-543-545"><span class="unknown token" data-binding="">=&gt;</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-18438692745931140664-543-545"><div class="tactic-state"><div class="goal"><details open="open"><summary><span class="goal-name">leaf</span></summary><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> leaf)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span>leaf</span></span></details></div></div></span> <span class="tactic"><label for="tactic-state-7-546-549"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.tacticRfl-546">rfl<span class="hover-container"><span class="hover-info"><code class="docstring">`rfl` tries to close the current goal using reflexivity.
+This is supposed to be an extensible tactic and users can add their own support
+for new reflexive relations.
+</code></span></span></span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-7-546-549"><div class="tactic-state">All goals completed! 🐙</div></span>
+  <span class="unknown token" data-binding="">|</span> <span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.732">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.734">ih1<span class="hover-container"><span class="hover-info"><code>flip (flip l) = l</code></span></span></span> <span class="var token" data-binding="var-_uniq.735">ih2<span class="hover-container"><span class="hover-info"><code>flip (flip r) = r</code></span></span></span> <span class="tactic"><label for="tactic-state-4064020030266545569-575-577"><span class="unknown token" data-binding="">=&gt;</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-4064020030266545569-575-577"><div class="tactic-state"><div class="goal"><details open="open"><summary><span class="goal-name">branch</span></summary><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.732">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.734">ih1<span class="hover-container"><span class="hover-info"><code>flip (flip l) = l</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.735">ih2<span class="hover-container"><span class="hover-info"><code>flip (flip r) = r</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.732">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>))<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.732">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></span></span></details></div></div></span>
+    <span class="tactic"><label for="tactic-state-12343899614673170079-582-598"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.simp-582">simp<span class="hover-container"><span class="hover-info"><code class="docstring">The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or
+non-dependent hypotheses. It has many variants:
+- `simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+- `simp [h₁, h₂, ..., hₙ]` simplifies the main goal target using the lemmas tagged
+  with the attribute `[simp]` and the given `hᵢ`'s, where the `hᵢ`'s are expressions.
+  If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with
+  `f` are used. This provides a convenient way to unfold `f`.
+- `simp [*]` simplifies the main goal target using the lemmas tagged with the
+  attribute `[simp]` and all hypotheses.
+- `simp only [h₁, h₂, ..., hₙ]` is like `simp [h₁, h₂, ..., hₙ]` but does not use `[simp]` lemmas.
+- `simp [-id₁, ..., -idₙ]` simplifies the main goal target using the lemmas tagged
+  with the attribute `[simp]`, but removes the ones named `idᵢ`.
+- `simp at h₁ h₂ ... hₙ` simplifies the hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. If
+  the target or another hypothesis depends on `hᵢ`, a new simplified hypothesis
+  `hᵢ` is introduced, but the old one remains in the local context.
+- `simp at *` simplifies all the hypotheses and the target.
+- `simp [*] at *` simplifies target and all (propositional) hypotheses using the
+  other hypotheses.
+</code></span></span></span> <span class="keyword token" data-binding="kw-occ-null-587">only</span> <span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span><span class="unknown token" data-binding="">]</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-12343899614673170079-582-598"><div class="tactic-state"><div class="goal"><details open="open"><summary><span class="goal-name">branch</span></summary><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.732">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.734">ih1<span class="hover-container"><span class="hover-info"><code>flip (flip l) = l</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.735">ih2<span class="hover-container"><span class="hover-info"><code>flip (flip r) = r</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)) <span class="var token" data-binding="var-_uniq.732">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>))<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.732">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></span></span></details></div></div></span>
+    <span class="tactic"><label for="tactic-state-7887238586126260305-603-611"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.rwSeq-603">rw<span class="hover-container"><span class="hover-info"><code class="docstring">`rw` is like `rewrite`, but also tries to close the goal by "cheap" (reducible) `rfl` afterwards.
+</code></span></span></span> <span class="unknown token" data-binding="">[</span><span class="var token" data-binding="var-_uniq.734">ih1<span class="hover-container"><span class="hover-info"><code>flip (flip l) = l</code></span></span></span><span class="unknown token" data-binding="">]</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-7887238586126260305-603-611"><div class="tactic-state"><div class="goal"><details open="open"><summary><span class="goal-name">branch</span></summary><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.732">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.683">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.734">ih1<span class="hover-container"><span class="hover-info"><code>flip (flip l) = l</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.735">ih2<span class="hover-container"><span class="hover-info"><code>flip (flip r) = r</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.732">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>))<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.731">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.732">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.733">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></span></span></details></div></div></span><span class="unknown token" data-binding="">;</span> <span class="tactic"><label for="tactic-state-7-613-621"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.rwSeq-613">rw<span class="hover-container"><span class="hover-info"><code class="docstring">`rw` is like `rewrite`, but also tries to close the goal by "cheap" (reducible) `rfl` afterwards.
+</code></span></span></span> <span class="unknown token" data-binding="">[</span><span class="var token" data-binding="var-_uniq.735">ih2<span class="hover-container"><span class="hover-info"><code>flip (flip r) = r</code></span></span></span><span class="unknown token" data-binding="">]</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-7-613-621"><div class="tactic-state">All goals completed! 🐙</div></span>
+
+-- Show more tactic combinators and placement of proof states
+<span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.theorem-685">theorem</span> <span class="const token" data-binding="const-flip_flip_id'">Tree.flip_flip_id'<span class="hover-container"><span class="hover-info"><code>∀ {α : Type u_1} (t : Tree α), flip (flip t) = t</code></span></span></span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.1017">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.1014">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.1017">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="unknown token" data-binding="">=</span> <span class="var token" data-binding="var-_uniq.1017">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="unknown token" data-binding="">:=</span> <span class="tactic"><label for="tactic-state-10056182705463292216-747-749"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.byTactic-747">by<span class="hover-container"><span class="hover-info"><code class="docstring">`by tac` constructs a term of the expected type by running the tactic(s) `tac`. </code></span></span></span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-10056182705463292216-747-749"><div class="tactic-state"><div class="goal"><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1017">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1017">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.1017">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></span></span></div></div></span>
+  <span class="tactic"><label for="tactic-state-9990107531062001306-752-763"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.induction-752">induction<span class="hover-container"><span class="hover-info"><code class="docstring">Assuming `x` is a variable in the local context with an inductive type,
+`induction x` applies induction on `x` to the main goal,
+producing one goal for each constructor of the inductive type,
+in which the target is replaced by a general instance of that constructor
+and an inductive hypothesis is added for each recursive argument to the constructor.
+If the type of an element in the local context depends on `x`,
+that element is reverted and reintroduced afterward,
+so that the inductive hypothesis incorporates that hypothesis as well.
+
+For example, given `n : Nat` and a goal with a hypothesis `h : P n` and target `Q n`,
+`induction n` produces one goal with hypothesis `h : P 0` and target `Q 0`,
+and one goal with hypotheses `h : P (Nat.succ a)` and `ih₁ : P a → Q a` and target `Q (Nat.succ a)`.
+Here the names `a` and `ih₁` are chosen automatically and are not accessible.
+You can use `with` to provide the variables names for each constructor.
+- `induction e`, where `e` is an expression instead of a variable,
+  generalizes `e` in the goal, and then performs induction on the resulting variable.
+- `induction e using r` allows the user to specify the principle of induction that should be used.
+  Here `r` should be a theorem whose result type must be of the form `C t`,
+  where `C` is a bound variable and `t` is a (possibly empty) sequence of bound variables
+- `induction e generalizing z₁ ... zₙ`, where `z₁ ... zₙ` are variables in the local context,
+  generalizes over `z₁ ... zₙ` before applying the induction but then introduces them in each goal.
+  In other words, the net effect is that each inductive hypothesis is generalized.
+- Given `x : Nat`, `induction x with | zero =&gt; tac₁ | succ x' ih =&gt; tac₂`
+  uses tactic `tac₁` for the `zero` case, and `tac₂` for the `succ` case.
+</code></span></span></span> <span class="var token" data-binding="var-_uniq.1017">t<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-9990107531062001306-752-763"><div class="tactic-state"><div class="goal"><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> leaf)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span>leaf</span></span></div><div class="goal"><details><summary><span class="goal-name">branch</span></summary><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1061">left✝<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1062">val✝<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1063">right✝<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1064">left_ih✝<span class="hover-container"><span class="hover-info"><code>flip (flip left✝) = left✝</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">left✝<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.1061">left✝<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1065">right_ih✝<span class="hover-container"><span class="hover-info"><code>flip (flip right✝) = right✝</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">right✝<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.1063">right✝<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">left✝<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1062">val✝<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">right✝<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>))<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">left✝<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1062">val✝<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">right✝<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></span></span></details></div></div></span>
+  <span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.case-766">case<span class="hover-container"><span class="hover-info"><code class="docstring">* `case tag =&gt; tac` focuses on the goal with case name `tag` and solves it using `tac`,
+  or else fails.
+* `case tag x₁ ... xₙ =&gt; tac` additionally renames the `n` most recent hypotheses
+  with inaccessible names to the given names.
+* `case tag₁ | tag₂ =&gt; tac` is equivalent to `(case tag₁ =&gt; tac); (case tag₂ =&gt; tac)`.
+</code></span></span></span> <span class="unknown token" data-binding="">leaf</span> <span class="tactic"><label for="tactic-state-6225862045195518502-776-778"><span class="unknown token" data-binding="">=&gt;</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-6225862045195518502-776-778"><div class="tactic-state"><div class="goal"><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> leaf)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span>leaf</span></span></div></div></span> <span class="tactic"><label for="tactic-state-7-779-782"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.tacticRfl-779">rfl<span class="hover-container"><span class="hover-info"><code class="docstring">`rfl` tries to close the current goal using reflexivity.
+This is supposed to be an extensible tactic and users can add their own support
+for new reflexive relations.
+</code></span></span></span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-7-779-782"><div class="tactic-state">All goals completed! 🐙</div></span>
+  <span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.«tacticNext_=>_»-785">next<span class="hover-container"><span class="hover-info"><code class="docstring">`next =&gt; tac` focuses on the next goal and solves it using `tac`, or else fails.
+`next x₁ ... xₙ =&gt; tac` additionally renames the `n` most recent hypotheses with
+inaccessible names to the given names.
+</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1064">ih1<span class="hover-container"><span class="hover-info"><code>flip (flip l) = l</code></span></span></span> <span class="var token" data-binding="var-_uniq.1065">ih2<span class="hover-container"><span class="hover-info"><code>flip (flip r) = r</code></span></span></span> <span class="tactic"><label for="tactic-state-14791019003939065205-804-806"><span class="unknown token" data-binding="">=&gt;</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-14791019003939065205-804-806"><div class="tactic-state"><div class="goal"><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1064">ih1<span class="hover-container"><span class="hover-info"><code>flip (flip l) = l</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1065">ih2<span class="hover-container"><span class="hover-info"><code>flip (flip r) = r</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>))<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></span></span></div></div></span>
+    <span class="tactic"><label for="tactic-state-11370842405012307573-811-827"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.simp-811">simp<span class="hover-container"><span class="hover-info"><code class="docstring">The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or
+non-dependent hypotheses. It has many variants:
+- `simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+- `simp [h₁, h₂, ..., hₙ]` simplifies the main goal target using the lemmas tagged
+  with the attribute `[simp]` and the given `hᵢ`'s, where the `hᵢ`'s are expressions.
+  If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with
+  `f` are used. This provides a convenient way to unfold `f`.
+- `simp [*]` simplifies the main goal target using the lemmas tagged with the
+  attribute `[simp]` and all hypotheses.
+- `simp only [h₁, h₂, ..., hₙ]` is like `simp [h₁, h₂, ..., hₙ]` but does not use `[simp]` lemmas.
+- `simp [-id₁, ..., -idₙ]` simplifies the main goal target using the lemmas tagged
+  with the attribute `[simp]`, but removes the ones named `idᵢ`.
+- `simp at h₁ h₂ ... hₙ` simplifies the hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. If
+  the target or another hypothesis depends on `hᵢ`, a new simplified hypothesis
+  `hᵢ` is introduced, but the old one remains in the local context.
+- `simp at *` simplifies all the hypotheses and the target.
+- `simp [*] at *` simplifies target and all (propositional) hypotheses using the
+  other hypotheses.
+</code></span></span></span> <span class="keyword token" data-binding="kw-occ-null-816">only</span> <span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span><span class="unknown token" data-binding="">]</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-11370842405012307573-811-827"><div class="tactic-state"><div class="goal"><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1064">ih1<span class="hover-container"><span class="hover-info"><code>flip (flip l) = l</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1065">ih2<span class="hover-container"><span class="hover-info"><code>flip (flip r) = r</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)) <span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>))<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></span></span></div></div></span>
+    <span class="tactic"><label for="tactic-state-12827798987509800093-832-840"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.rwSeq-832">rw<span class="hover-container"><span class="hover-info"><code class="docstring">`rw` is like `rewrite`, but also tries to close the goal by "cheap" (reducible) `rfl` afterwards.
+</code></span></span></span> <span class="unknown token" data-binding="">[</span><span class="var token" data-binding="var-_uniq.1064">ih1<span class="hover-container"><span class="hover-info"><code>flip (flip l) = l</code></span></span></span><span class="unknown token" data-binding="">]</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-12827798987509800093-832-840"><div class="tactic-state"><div class="goal"><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1064">ih1<span class="hover-container"><span class="hover-info"><code>flip (flip l) = l</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1065">ih2<span class="hover-container"><span class="hover-info"><code>flip (flip r) = r</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>))<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></span></span></div></div></span><span class="unknown token" data-binding="">;</span> <span class="tactic"><label for="tactic-state-12827798987509800093-842-843"><span class="unknown token" data-binding="">.</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-12827798987509800093-842-843"><div class="tactic-state"><div class="goal"><table class="hypotheses"><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="sort token" data-binding="">Type u_1</span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree">Tree<span class="hover-container"><span class="hover-info"><code>Tree.{u} (α : Type u) : Type u</code></span></span></span> <span class="var token" data-binding="var-_uniq.1029">α<span class="hover-container"><span class="hover-info"><code>Type u_1</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1064">ih1<span class="hover-container"><span class="hover-info"><code>flip (flip l) = l</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr><tr class="hypothesis"><td class="name"><span class="var token" data-binding="var-_uniq.1065">ih2<span class="hover-container"><span class="hover-info"><code>flip (flip r) = r</code></span></span></span></td><td class="colon">:</td><td class="type"><span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>)<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></td></tr></table><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> (<span class="const token" data-binding="const-Tree.flip">flip<span class="hover-container"><span class="hover-info"><code>Tree.flip.{u_1} {α : Type u_1} (a✝ : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span>))<span class="const token" data-binding="const-Eq"> = <span class="hover-container"><span class="hover-info"><code>Eq.{u_1} {α : Sort u_1} (a✝a✝¹ : α) : Prop</code><span class="sep"></span><code class="docstring">The equality relation. It has one introduction rule, `Eq.refl`.
+We use `a = b` as notation for `Eq a b`.
+A fundamental property of equality is that it is an equivalence relation.
+```
+variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+```
+Equality is much more than an equivalence relation, however. It has the important property that every assertion
+respects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.
+That is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.
+Example:
+```
+example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+```
+The triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\t`.
+For more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)
+</code></span></span></span><span class="const token" data-binding="const-Tree.branch">branch<span class="hover-container"><span class="hover-info"><code>Tree.branch.{u} {α : Type u} (left : Tree α) (val : α) (right : Tree α) : Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1061">l<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1062">v<span class="hover-container"><span class="hover-info"><code>α</code></span></span></span> <span class="var token" data-binding="var-_uniq.1063">r<span class="hover-container"><span class="hover-info"><code>Tree α</code></span></span></span></span></span></div></div></span> <span class="tactic"><label for="tactic-state-7-844-852"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.rwSeq-844">rw<span class="hover-container"><span class="hover-info"><code class="docstring">`rw` is like `rewrite`, but also tries to close the goal by "cheap" (reducible) `rfl` afterwards.
+</code></span></span></span> <span class="unknown token" data-binding="">[</span><span class="var token" data-binding="var-_uniq.1065">ih2<span class="hover-container"><span class="hover-info"><code>flip (flip r) = r</code></span></span></span><span class="unknown token" data-binding="">]</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-7-844-852"><div class="tactic-state">All goals completed! 🐙</div></span></code><p>
+            And use old syntax:</p>
+          <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.def-895">def</span> <span class="const token" data-binding="const-foo">foo<span class="hover-container"><span class="hover-info"><code>Nat → Nat → Nat</code></span></span></span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.1166">n<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span> <span class="var token" data-binding="var-_uniq.1168">k<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Nat">Nat<span class="hover-container"><span class="hover-info"><code>Nat : Type</code><span class="sep"></span><code class="docstring">The type of natural numbers, starting at zero. It is defined as an
+inductive type freely generated by "zero is a natural number" and
+"the successor of a natural number is a natural number".
+
+You can prove a theorem `P n` about `n : Nat` by `induction n`, which will
+expect a proof of the theorem for `P 0`, and a proof of `P (succ i)` assuming
+a proof of `P i`. The same method also works to define functions by recursion
+on natural numbers: induction and recursion are two expressions of the same
+operation from lean's point of view.
+
+```
+open Nat
+example (n : Nat) : n &lt; succ n := by
+  induction n with
+  | zero =&gt;
+    show 0 &lt; 1
+    decide
+  | succ i ih =&gt; -- ih : i &lt; succ i
+    show succ i &lt; succ (succ i)
+    exact Nat.succ_lt_succ ih
+```
+
+This type is special-cased by both the kernel and the compiler:
+* The type of expressions contains "`Nat` literals" as a primitive constructor,
+  and the kernel knows how to reduce zero/succ expressions to nat literals.
+* If implemented naively, this type would represent a numeral `n` in unary as a
+  linked list with `n` links, which is horribly inefficient. Instead, the
+  runtime itself has a special representation for `Nat` which stores numbers up
+  to 2^63 directly and larger numbers use an arbitrary precision "bignum"
+  library (usually [GMP](https://gmplib.org/)).
+</code></span></span></span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Nat">Nat<span class="hover-container"><span class="hover-info"><code>Nat : Type</code><span class="sep"></span><code class="docstring">The type of natural numbers, starting at zero. It is defined as an
+inductive type freely generated by "zero is a natural number" and
+"the successor of a natural number is a natural number".
+
+You can prove a theorem `P n` about `n : Nat` by `induction n`, which will
+expect a proof of the theorem for `P 0`, and a proof of `P (succ i)` assuming
+a proof of `P i`. The same method also works to define functions by recursion
+on natural numbers: induction and recursion are two expressions of the same
+operation from lean's point of view.
+
+```
+open Nat
+example (n : Nat) : n &lt; succ n := by
+  induction n with
+  | zero =&gt;
+    show 0 &lt; 1
+    decide
+  | succ i ih =&gt; -- ih : i &lt; succ i
+    show succ i &lt; succ (succ i)
+    exact Nat.succ_lt_succ ih
+```
+
+This type is special-cased by both the kernel and the compiler:
+* The type of expressions contains "`Nat` literals" as a primitive constructor,
+  and the kernel knows how to reduce zero/succ expressions to nat literals.
+* If implemented naively, this type would represent a numeral `n` in unary as a
+  linked list with `n` links, which is horribly inefficient. Instead, the
+  runtime itself has a special representation for `Nat` which stores numbers up
+  to 2^63 directly and larger numbers use an arbitrary precision "bignum"
+  library (usually [GMP](https://gmplib.org/)).
+</code></span></span></span> <span class="unknown token" data-binding="">:=</span>
+  <span class="keyword token" data-binding="kw-occ-termIfThenElse-926">if<span class="hover-container"><span class="hover-info"><code class="docstring">`if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+
+Because lean uses a strict (call-by-value) evaluation strategy, the signature of this
+function is problematic in that it would require `t` and `e` to be evaluated before
+calling the `ite` function, which would cause both sides of the `if` to be evaluated.
+Even if the result is discarded, this would be a big performance problem,
+and is undesirable for users in any case. To resolve this, `ite` is marked as
+`@[macro_inline]`, which means that it is unfolded during code generation, and
+the definition of the function uses `fun _ =&gt; t` and `fun _ =&gt; e` so this recovers
+the expected "lazy" behavior of `if`: the `t` and `e` arguments delay evaluation
+until `c` is known.
+</code></span></span></span> <span class="var token" data-binding="var-_uniq.1166">n<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span> <span class="unknown token" data-binding="">&lt;</span> <span class="var token" data-binding="var-_uniq.1168">k<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span> <span class="keyword token" data-binding="kw-occ-termIfThenElse-926">then<span class="hover-container"><span class="hover-info"><code class="docstring">`if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+
+Because lean uses a strict (call-by-value) evaluation strategy, the signature of this
+function is problematic in that it would require `t` and `e` to be evaluated before
+calling the `ite` function, which would cause both sides of the `if` to be evaluated.
+Even if the result is discarded, this would be a big performance problem,
+and is undesirable for users in any case. To resolve this, `ite` is marked as
+`@[macro_inline]`, which means that it is unfolded during code generation, and
+the definition of the function uses `fun _ =&gt; t` and `fun _ =&gt; e` so this recovers
+the expected "lazy" behavior of `if`: the `t` and `e` arguments delay evaluation
+until `c` is known.
+</code></span></span></span>
+    <span class="unknown token" data-binding="">1</span> <span class="unknown token" data-binding="">+</span> <span class="const token" data-binding="const-foo">foo<span class="hover-container"><span class="hover-info"><code>Nat → Nat → Nat</code></span></span></span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.1166">n<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span> <span class="unknown token" data-binding="">+</span> <span class="unknown token" data-binding="">1</span><span class="unknown token" data-binding="">)</span> <span class="var token" data-binding="var-_uniq.1168">k<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span>
+  <span class="keyword token" data-binding="kw-occ-termIfThenElse-926">else<span class="hover-container"><span class="hover-info"><code class="docstring">`if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+
+Because lean uses a strict (call-by-value) evaluation strategy, the signature of this
+function is problematic in that it would require `t` and `e` to be evaluated before
+calling the `ite` function, which would cause both sides of the `if` to be evaluated.
+Even if the result is discarded, this would be a big performance problem,
+and is undesirable for users in any case. To resolve this, `ite` is marked as
+`@[macro_inline]`, which means that it is unfolded during code generation, and
+the definition of the function uses `fun _ =&gt; t` and `fun _ =&gt; e` so this recovers
+the expected "lazy" behavior of `if`: the `t` and `e` arguments delay evaluation
+until `c` is known.
+</code></span></span></span> <span class="unknown token" data-binding="">0</span>
+<span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.terminationBy-971">termination_by</span> <span class="unknown token" data-binding="">foo</span> <span class="unknown token" data-binding="">n</span> <span class="unknown token" data-binding="">k</span> <span class="unknown token" data-binding="">=&gt;</span> <span class="var token" data-binding="var-_uniq.1364">k<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span> <span class="unknown token" data-binding="">-</span> <span class="var token" data-binding="var-_uniq.1363">n<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span></code><p>
+            Version is:</p>
+          <code class="hl lean block" data-lean-context="examples"><span class="has-info info"><span class="hover-container"><span class="hover-info messages"><code class="message info">"4.5.0"
+</code></span></span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.eval-1026">#eval</span></span> <span class="const token" data-binding="const-Lean.versionString">Lean.versionString<span class="hover-container"><span class="hover-info"><code>Lean.versionString : String</code></span></span></span></code><p>
+            that is,</p>
+          <div class="information">
+            <pre>"4.5.0"
+</pre></div>
+          <p>
+            Comparing output modulo whitespace differences, with exact:</p>
+          <div class="information">
+            <pre>Tree.branch
+  (Tree.branch (Tree.leaf) 4 (Tree.branch (Tree.leaf) 3 (Tree.leaf)))
+  2
+  (Tree.branch (Tree.leaf) 1 (Tree.leaf))
+</pre></div>
+          <p>
+            lax:</p>
+          <div class="information">
+            <pre>Tree.branch
+  (Tree.branch
+    (Tree.leaf)
+    4
+    (Tree.branch (Tree.leaf) 3 (Tree.leaf)))
+  2
+  (Tree.branch (Tree.leaf) 1 (Tree.leaf))
+</pre></div>
+          <p>
+            and normalized matching:</p>
+          <div class="information">
+            <pre>Tree.branch   (Tree.branch (Tree.leaf) 4 (Tree.branch (Tree.leaf) 3 (Tree.leaf)))
+  2   (Tree.branch (Tree.leaf) 1 (Tree.leaf))
+</pre></div>
+          <p>
+            Here's a signature, highlighted and laid out:</p>
+          <code class="hl lean block" data-lean-context="examples"><span class="const token" data-binding="const-Nat.rec">Nat.rec<span class="hover-container"><span class="hover-info"><code>Nat.rec.{u} {motive : Nat → Sort u} (zero : motive Nat.zero) (succ : (n : Nat) → motive n → motive (Nat.succ n))
+  (t : Nat) : motive t</code></span></span></span><span class="unknown token" data-binding="">.{</span><span class="unknown token" data-binding="">u</span><span class="unknown token" data-binding="">}</span> <span class="unknown token" data-binding="">{</span><span class="var token" data-binding="var-_uniq.11885">motive<span class="hover-container"><span class="hover-info"><code>Nat → Sort u</code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Nat">Nat<span class="hover-container"><span class="hover-info"><code>Nat : Type</code><span class="sep"></span><code class="docstring">The type of natural numbers, starting at zero. It is defined as an
+inductive type freely generated by "zero is a natural number" and
+"the successor of a natural number is a natural number".
+
+You can prove a theorem `P n` about `n : Nat` by `induction n`, which will
+expect a proof of the theorem for `P 0`, and a proof of `P (succ i)` assuming
+a proof of `P i`. The same method also works to define functions by recursion
+on natural numbers: induction and recursion are two expressions of the same
+operation from lean's point of view.
+
+```
+open Nat
+example (n : Nat) : n &lt; succ n := by
+  induction n with
+  | zero =&gt;
+    show 0 &lt; 1
+    decide
+  | succ i ih =&gt; -- ih : i &lt; succ i
+    show succ i &lt; succ (succ i)
+    exact Nat.succ_lt_succ ih
+```
+
+This type is special-cased by both the kernel and the compiler:
+* The type of expressions contains "`Nat` literals" as a primitive constructor,
+  and the kernel knows how to reduce zero/succ expressions to nat literals.
+* If implemented naively, this type would represent a numeral `n` in unary as a
+  linked list with `n` links, which is horribly inefficient. Instead, the
+  runtime itself has a special representation for `Nat` which stores numbers up
+  to 2^63 directly and larger numbers use an arbitrary precision "bignum"
+  library (usually [GMP](https://gmplib.org/)).
+</code></span></span></span> <span class="unknown token" data-binding="">→</span> <span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.sort-1106">Sort<span class="hover-container"><span class="hover-info"><code class="docstring">A specific universe in Lean's infinite hierarchy of universes. </code></span></span></span> <span class="unknown token" data-binding="">u</span><span class="unknown token" data-binding="">}</span>
+  <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.11887">zero<span class="hover-container"><span class="hover-info"><code>motive Nat.zero</code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.11885">motive<span class="hover-container"><span class="hover-info"><code>Nat → Sort u</code></span></span></span> <span class="const token" data-binding="const-Nat.zero">Nat.zero<span class="hover-container"><span class="hover-info"><code>Nat.zero : Nat</code><span class="sep"></span><code class="docstring">`Nat.zero`, normally written `0 : Nat`, is the smallest natural number.
+This is one of the two constructors of `Nat`. </code></span></span></span><span class="unknown token" data-binding="">)</span>
+  <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.11894">succ<span class="hover-container"><span class="hover-info"><code>(n : Nat) → motive n → motive (Nat.succ n)</code></span></span></span> <span class="unknown token" data-binding="">:</span>
+    <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.11890">n<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Nat">Nat<span class="hover-container"><span class="hover-info"><code>Nat : Type</code><span class="sep"></span><code class="docstring">The type of natural numbers, starting at zero. It is defined as an
+inductive type freely generated by "zero is a natural number" and
+"the successor of a natural number is a natural number".
+
+You can prove a theorem `P n` about `n : Nat` by `induction n`, which will
+expect a proof of the theorem for `P 0`, and a proof of `P (succ i)` assuming
+a proof of `P i`. The same method also works to define functions by recursion
+on natural numbers: induction and recursion are two expressions of the same
+operation from lean's point of view.
+
+```
+open Nat
+example (n : Nat) : n &lt; succ n := by
+  induction n with
+  | zero =&gt;
+    show 0 &lt; 1
+    decide
+  | succ i ih =&gt; -- ih : i &lt; succ i
+    show succ i &lt; succ (succ i)
+    exact Nat.succ_lt_succ ih
+```
+
+This type is special-cased by both the kernel and the compiler:
+* The type of expressions contains "`Nat` literals" as a primitive constructor,
+  and the kernel knows how to reduce zero/succ expressions to nat literals.
+* If implemented naively, this type would represent a numeral `n` in unary as a
+  linked list with `n` links, which is horribly inefficient. Instead, the
+  runtime itself has a special representation for `Nat` which stores numbers up
+  to 2^63 directly and larger numbers use an arbitrary precision "bignum"
+  library (usually [GMP](https://gmplib.org/)).
+</code></span></span></span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">→</span>
+    <span class="var token" data-binding="var-_uniq.11885">motive<span class="hover-container"><span class="hover-info"><code>Nat → Sort u</code></span></span></span> <span class="var token" data-binding="var-_uniq.11890">n<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span> <span class="unknown token" data-binding="">→</span>
+    <span class="var token" data-binding="var-_uniq.11885">motive<span class="hover-container"><span class="hover-info"><code>Nat → Sort u</code></span></span></span> <span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Nat.succ">Nat.succ<span class="hover-container"><span class="hover-info"><code>Nat.succ (n : Nat) : Nat</code><span class="sep"></span><code class="docstring">The successor function on natural numbers, `succ n = n + 1`.
+This is one of the two constructors of `Nat`. </code></span></span></span> <span class="var token" data-binding="var-_uniq.11890">n<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">)</span>
+  <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.11896">t<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Nat">Nat<span class="hover-container"><span class="hover-info"><code>Nat : Type</code><span class="sep"></span><code class="docstring">The type of natural numbers, starting at zero. It is defined as an
+inductive type freely generated by "zero is a natural number" and
+"the successor of a natural number is a natural number".
+
+You can prove a theorem `P n` about `n : Nat` by `induction n`, which will
+expect a proof of the theorem for `P 0`, and a proof of `P (succ i)` assuming
+a proof of `P i`. The same method also works to define functions by recursion
+on natural numbers: induction and recursion are two expressions of the same
+operation from lean's point of view.
+
+```
+open Nat
+example (n : Nat) : n &lt; succ n := by
+  induction n with
+  | zero =&gt;
+    show 0 &lt; 1
+    decide
+  | succ i ih =&gt; -- ih : i &lt; succ i
+    show succ i &lt; succ (succ i)
+    exact Nat.succ_lt_succ ih
+```
+
+This type is special-cased by both the kernel and the compiler:
+* The type of expressions contains "`Nat` literals" as a primitive constructor,
+  and the kernel knows how to reduce zero/succ expressions to nat literals.
+* If implemented naively, this type would represent a numeral `n` in unary as a
+  linked list with `n` links, which is horribly inefficient. Instead, the
+  runtime itself has a special representation for `Nat` which stores numbers up
+  to 2^63 directly and larger numbers use an arbitrary precision "bignum"
+  library (usually [GMP](https://gmplib.org/)).
+</code></span></span></span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.11885">motive<span class="hover-container"><span class="hover-info"><code>Nat → Sort u</code></span></span></span> <span class="var token" data-binding="var-_uniq.11896">t<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span></code></section>
+        </div>
+      </div>
+    </body>
+  </html>
+

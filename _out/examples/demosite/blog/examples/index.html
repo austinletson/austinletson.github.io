@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Examples of Verso usage — Verso </title><link rel="stylesheet" href="../../static/style.css">
+    <style>
+
+
+.hl.lean {
+  white-space: pre;
+}
+
+.hl.lean .keyword {
+  font-weight : bold;
+}
+
+.hl.lean .var {
+  font-style: italic;
+  position: relative;
+}
+
+.hover-container {
+  width: 0;
+  height: 0;
+  position: relative;
+  display: inline;
+}
+
+.hl.lean .hover-info {
+  white-space: normal;
+}
+
+.hl.lean .token .hover-info {
+  display: none;
+  position: absolute;
+  background-color: #e5e5e5;
+  border: 1px solid black;
+  padding: 0.5em;
+  z-index: 300;
+  font-size: inherit;
+}
+
+.hl.lean .has-info .hover-info.messages {
+  max-height: 10em;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  background-color: #e5e5e5;
+}
+
+.hl.lean .hover-info code {
+  white-space: pre;
+}
+
+.hl.lean .hover-info.messages > code {
+  padding: 0.5em;
+  display: block;
+  width: fit-content;
+}
+
+.hl.lean .hover-info.messages > code:only-child {
+  margin: 0;
+}
+
+.hl.lean .hover-info.messages > code {
+  margin: 0.1em;
+}
+
+.hl.lean .hover-info.messages > code:not(:first-child) {
+  margin-top: 0em;
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info:hover > .hover-container > .hover-info:not(.tactic *),
+  .hl.lean .tactic:has(> .tactic-toggle:checked) .has-info:hover > .hover-container > .hover-info,
+  .hl.lean .token:hover > .hover-container > .hover-info:not(.has-info *):not(.tactic *),
+  .hl.lean .tactic:has(> .tactic-toggle:checked) .token:hover > .hover-container > .hover-info:not(.has-info *) {
+    display: inline-block;
+    position: absolute;
+    top: 1em;
+    font-weight: normal;
+    font-style: normal;
+    width: min-content;
+  }
+}
+
+.hl.lean.block {
+  display: block;
+}
+
+.hl.lean.inline {
+  display: inline;
+}
+
+.hl.lean .token {
+  transition: all 0.25s; /* Slight fade for highlights */
+}
+
+@media (hover: hover) {
+  .hl.lean .token.binding-hl, .hl.lean .literal.string:hover {
+    background-color: #eee;
+    border-radius: 2px;
+    transition: none;
+  }
+}
+
+
+.hl.lean .has-info {
+  text-decoration-style: wavy;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.1rem;
+}
+
+.hl.lean .has-info .hover-info {
+  display: none;
+  position: absolute;
+  transform: translate(0.25rem, 0.3rem);
+  border: 1px solid black;
+  padding: 0.5em;
+  z-index: 400;
+  text-align: left;
+}
+
+.hl.lean .has-info.error {
+  text-decoration-color: red;
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info.error:hover {
+    background-color: #ffb3b3;
+  }
+}
+
+.hl.lean .has-info > .hover-container > .hover-info > code.error {
+  background-color: #ffb3b3;
+}
+
+.error pre {
+    color: red;
+}
+
+.hl.lean .has-info.warning {
+  text-decoration-color: yellow;
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info.warning:hover {
+    background-color: yellow;
+  }
+}
+
+.hl.lean .has-info .hover-info.messages > code.warning {
+  background-color: yellow;
+}
+
+.hl.lean .has-info.info {
+  text-decoration-color: blue;
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info.info:hover {
+    background-color: #4777ff;
+  }
+}
+
+
+.hl.lean .has-info .hover-info.messages > code.info {
+  background-color: #4777ff;
+}
+
+.hl.lean div.docstring {
+  font-family: sans-serif;
+  white-space: normal;
+  width: max-content;
+  max-width: 40em;
+}
+
+.hl.lean div.docstring > :last-child {
+  margin-bottom: 0;
+}
+
+.hl.lean .hover-info .sep {
+  display: block;
+  width: auto;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0;
+  height: 1px;
+  border-top: 1px solid #ccc;
+}
+
+.hl.lean code {
+  font-family: monospace;
+}
+
+.hl.lean .tactic-state {
+  display: none;
+  position: relative;
+  left: 2em;
+  width: fit-content;
+  border: 1px solid #888888;
+  border-radius: 0.1em;
+  padding: 0.5em;
+  font-family: sans-serif;
+  background-color: #ffffff;
+  z-index: 200;
+}
+
+.hl.lean .tactic {
+  position: relative;
+}
+
+.hl.lean .tactic-toggle:checked ~ .tactic-state {
+  display: block;
+}
+
+@media (hover: hover) {
+  .hl.lean .tactic:hover > .tactic-toggle:not(:checked) ~ .tactic-state {
+    display: block;
+    position: absolute;
+    left: 0;
+    transform: translate(0.25rem, 0);
+    z-index: 250;
+  }
+}
+
+.hl.lean .tactic > label {
+  position: relative;
+  transition: all 0.5s;
+}
+
+@media (hover: hover) {
+  .hl.lean .tactic > label:hover {
+    border-bottom: 1px dotted #bbbbbb;
+  }
+}
+
+.hl.lean .tactic-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.hl.lean .tactic > label::after {
+  content: "";
+  border: 1px solid #bbbbbb;
+  border-radius: 1em;
+  height: 0.25em;
+  vertical-align: middle;
+  width: 0.6em;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+  display: inline-block;
+  transition: all 0.5s;
+}
+
+@media (hover: hover) {
+  .hl.lean .tactic > label:hover::after {
+    border: 1px solid #aaaaaa;
+    background-color: #aaaaaa;
+    transition: all 0.5s;
+  }
+}
+
+.hl.lean .tactic > label:has(+ .tactic-toggle:checked)::after {
+  border: 1px solid #999999;
+  background-color: #999999;
+  transition: all 0.5s;
+}
+
+.hl.lean .tactic-state .goal + .goal {
+  margin-top: 1.5em;
+}
+
+.hl.lean .tactic-state summary {
+  margin-left: -0.5em;
+}
+
+.hl.lean .tactic-state details {
+  padding-left: 0.5em;
+}
+
+.hl.lean .tactic-state .goal-name::before {
+  font-style: normal;
+  content: "case ";
+}
+
+.hl.lean .tactic-state .goal-name {
+  font-style: italic;
+  font-family: monospace;
+}
+
+.hl.lean .tactic-state .hypotheses td.colon {
+  text-align: center;
+  min-width: 1em;
+}
+
+.hl.lean .tactic-state .hypotheses td.name {
+  text-align: right;
+}
+
+.hl.lean .tactic-state .hypotheses td.name,
+.hl.lean .tactic-state .hypotheses td.type,
+.hl.lean .tactic-state .conclusion .type {
+  font-family: monospace;
+}
+
+
+</style>
+<script>
+      
+window.onload = () => {
+    for (const c of document.querySelectorAll(".hl.lean .token")) {
+        if (c.dataset.binding != "") {
+            c.addEventListener("mouseover", (event) => {
+                const context = c.closest(".hl.lean").dataset.leanContext;
+                for (const example of document.querySelectorAll(".hl.lean")) {
+                    if (example.dataset.leanContext == context) {
+                        for (const tok of example.querySelectorAll(".token")) {
+                            if (c.dataset.binding == tok.dataset.binding) {
+                                tok.classList.add("binding-hl");
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        c.addEventListener("mouseout", (event) => {
+            for (const tok of document.querySelectorAll(".hl.lean .token")) {
+                tok.classList.remove("binding-hl");
+            }
+        });
+    }
+    /* Render docstrings */
+    for (const d of document.querySelectorAll("code.docstring, pre.docstring")) {
+        const str = d.innerText;
+        const html = marked.parse(str);
+        const rendered = document.createElement("div");
+        rendered.classList.add("docstring");
+        rendered.innerHTML = html;
+        d.parentNode.replaceChild(rendered, d);
+    }
+}
+
+</script>
+    
+<script>
+      
+document.addEventListener("DOMContentLoaded", () => {
+    for (const m of document.querySelectorAll(".math.inline")) {
+        katex.render(m.textContent, m, {throwOnError: false, displayMode: false});
+    }
+    for (const m of document.querySelectorAll(".math.display")) {
+        katex.render(m.textContent, m, {throwOnError: false, displayMode: true});
+    }
+});
+</script>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js" integrity="sha384-zbcZAIxlvJtNE3Dp5nxLXdXtXyxwOdnILY1TDPVmKFhl4r4nSUG1r8bcFXGVa4Te" crossorigin="anonymous"></script>
+    </head>
+  <body>
+    <header>
+      <div class="inner-wrap">
+        <a class="logo" href="../../"><img src="../../static/logo.png"></a><nav class="top" role="navigation">
+          <ol>
+            <li>
+              <a href="../../about">About Me</a></li>
+            <li>
+              <a href="../../blog">A Verso Blog</a></li>
+            </ol>
+          </nav>
+        </div>
+      </header>
+    <div class="main" role="main">
+      <div class="wrap">
+        <h1>
+          Examples of Verso usage</h1>
+        <h2>
+          Posts</h2>
+        <ul class="post-list">
+          <li>
+            <a href="../2024-3-5-examples-from-subprojects" class="title"><span class="name">Examples from Subprojects</span></a><div class="metadata">
+              <div class="authors">
+                <span class="author">Fictional Author</span><span class="author">Another Fictional Author</span></div>
+              <div class="date">
+                2024-3-5</div>
+              <ul class="categories">
+                <li>
+                  <a href="../examples">Examples of Verso usage</a></li>
+                <li>
+                  <a href="../other">Other content</a></li>
+                </ul>
+              </div>
+            <p>
+              This post demonstrates mixing highlighted examples from multiple Lean versions.</p>
+            <a href="../2024-3-5-examples-from-subprojects" class="read-more">Read more</a></li>
+          <li>
+            <a href="../2024-1-15-conditional-expressions-in-lean" class="title"><span class="name">Conditional Expressions in Lean</span></a><div class="metadata">
+              <div class="authors">
+                <span class="author">Fictional Author</span><span class="author">Another Fictional Author</span></div>
+              <div class="date">
+                2024-1-15</div>
+              <ul class="categories">
+                <li>
+                  <a href="../examples">Examples of Verso usage</a></li>
+                <li>
+                  <a href="../other">Other content</a></li>
+                </ul>
+              </div>
+            <p>
+              Finally started blogging!
+This post describes the syntax and semantics of conditional expressions in Lean.
+Here are some examples:</p>
+            <code class="hl lean block" data-lean-context="demo"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.example-697">example</span> <span class="unknown token" data-binding="">:=</span> <span class="keyword token" data-binding="kw-occ-termIfThenElse-708">if<span class="hover-container"><span class="hover-info"><code class="docstring">`if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+</code></span></span></span> <span class="const token" data-binding="const-Bool.true">true<span class="hover-container"><span class="hover-info"><code>Bool.true : Bool</code><span class="sep"></span><code class="docstring">The boolean value `true`, not to be confused with the proposition `True`. </code></span></span></span> <span class="keyword token" data-binding="kw-occ-termIfThenElse-708">then<span class="hover-container"><span class="hover-info"><code class="docstring">`if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+</code></span></span></span> <span class="unknown token" data-binding="">1</span> <span class="keyword token" data-binding="kw-occ-termIfThenElse-708">else<span class="hover-container"><span class="hover-info"><code class="docstring">`if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+</code></span></span></span> <span class="unknown token" data-binding="">2</span>
+<span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.example-730">example</span> <span class="unknown token" data-binding="">:=</span> <span class="keyword token" data-binding="kw-occ-termIfThenElse-741">if<span class="hover-container"><span class="hover-info"><code class="docstring">`if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+</code></span></span></span> <span class="const token" data-binding="const-True">True<span class="hover-container"><span class="hover-info"><code>True : Prop</code><span class="sep"></span><code class="docstring">`True` is a proposition and has only an introduction rule, `True.intro : True`.
+In other words, `True` is simply true, and has a canonical proof, `True.intro`
+For more information: [Propositional Logic](https://lean-lang.org/theorem_proving_in_lean4/propositions_and_proofs.html#propositional-logic)
+</code></span></span></span> <span class="keyword token" data-binding="kw-occ-termIfThenElse-741">then<span class="hover-container"><span class="hover-info"><code class="docstring">`if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+</code></span></span></span> <span class="unknown token" data-binding="">1</span> <span class="keyword token" data-binding="kw-occ-termIfThenElse-741">else<span class="hover-container"><span class="hover-info"><code class="docstring">`if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+</code></span></span></span> <span class="unknown token" data-binding="">2</span>
+<span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.example-763">example</span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Int">Int<span class="hover-container"><span class="hover-info"><code>Int : Type</code><span class="sep"></span><code class="docstring">The type of integers. It is defined as an inductive type based on the
+natural number type `Nat` featuring two constructors: "a natural
+number is an integer", and "the negation of a successor of a natural
+number is an integer". The former represents integers between `0`
+(inclusive) and `∞`, and the latter integers between `-∞` and `-1`
+(inclusive).
+
+This type is special-cased by the compiler. The runtime has a special
+representation for `Int` which stores "small" signed numbers directly,
+and larger numbers use an arbitrary precision "bignum" library
+(usually [GMP](https://gmplib.org/)). A "small number" is an integer
+that can be encoded with 63 bits (31 bits on 32-bits architectures).
+</code></span></span></span> <span class="unknown token" data-binding="">:=</span> <span class="keyword token" data-binding="kw-occ-termIfThenElse-780">if<span class="hover-container"><span class="hover-info"><code class="docstring">`if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+</code></span></span></span> <span class="const token" data-binding="const-True">True<span class="hover-container"><span class="hover-info"><code>True : Prop</code><span class="sep"></span><code class="docstring">`True` is a proposition and has only an introduction rule, `True.intro : True`.
+In other words, `True` is simply true, and has a canonical proof, `True.intro`
+For more information: [Propositional Logic](https://lean-lang.org/theorem_proving_in_lean4/propositions_and_proofs.html#propositional-logic)
+</code></span></span></span> <span class="keyword token" data-binding="kw-occ-termIfThenElse-780">then<span class="hover-container"><span class="hover-info"><code class="docstring">`if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+</code></span></span></span> <span class="unknown token" data-binding="">1</span> <span class="keyword token" data-binding="kw-occ-termIfThenElse-780">else<span class="hover-container"><span class="hover-info"><code class="docstring">`if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+</code></span></span></span> <span class="unknown token" data-binding="">2</span>
+<span class="unknown token" data-binding=""></span></code><code class="hl lean block" data-lean-context="demo"><span class="doc-comment token" data-binding="">/-- A recursive function -/</span>
+<span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.definition-848">def</span> <span class="const token" data-binding="const-slowId">slowId<span class="hover-container"><span class="hover-info"><code>_root_.slowId : Nat → Nat</code><span class="sep"></span><code class="docstring">A recursive function </code></span></span></span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Nat">Nat<span class="hover-container"><span class="hover-info"><code>Nat : Type</code><span class="sep"></span><code class="docstring">The type of natural numbers, starting at zero. It is defined as an
+inductive type freely generated by "zero is a natural number" and
+"the successor of a natural number is a natural number".
+
+You can prove a theorem `P n` about `n : Nat` by `induction n`, which will
+expect a proof of the theorem for `P 0`, and a proof of `P (succ i)` assuming
+a proof of `P i`. The same method also works to define functions by recursion
+on natural numbers: induction and recursion are two expressions of the same
+operation from Lean's point of view.
+
+```
+open Nat
+example (n : Nat) : n &lt; succ n := by
+  induction n with
+  | zero =&gt;
+    show 0 &lt; 1
+    decide
+  | succ i ih =&gt; -- ih : i &lt; succ i
+    show succ i &lt; succ (succ i)
+    exact Nat.succ_lt_succ ih
+```
+
+This type is special-cased by both the kernel and the compiler:
+* The type of expressions contains "`Nat` literals" as a primitive constructor,
+  and the kernel knows how to reduce zero/succ expressions to nat literals.
+* If implemented naively, this type would represent a numeral `n` in unary as a
+  linked list with `n` links, which is horribly inefficient. Instead, the
+  runtime itself has a special representation for `Nat` which stores numbers up
+  to 2^63 directly and larger numbers use an arbitrary precision "bignum"
+  library (usually [GMP](https://gmplib.org/)).
+</code></span></span></span> <span class="unknown token" data-binding="">→</span> <span class="const token" data-binding="const-Nat">Nat<span class="hover-container"><span class="hover-info"><code>Nat : Type</code><span class="sep"></span><code class="docstring">The type of natural numbers, starting at zero. It is defined as an
+inductive type freely generated by "zero is a natural number" and
+"the successor of a natural number is a natural number".
+
+You can prove a theorem `P n` about `n : Nat` by `induction n`, which will
+expect a proof of the theorem for `P 0`, and a proof of `P (succ i)` assuming
+a proof of `P i`. The same method also works to define functions by recursion
+on natural numbers: induction and recursion are two expressions of the same
+operation from Lean's point of view.
+
+```
+open Nat
+example (n : Nat) : n &lt; succ n := by
+  induction n with
+  | zero =&gt;
+    show 0 &lt; 1
+    decide
+  | succ i ih =&gt; -- ih : i &lt; succ i
+    show succ i &lt; succ (succ i)
+    exact Nat.succ_lt_succ ih
+```
+
+This type is special-cased by both the kernel and the compiler:
+* The type of expressions contains "`Nat` literals" as a primitive constructor,
+  and the kernel knows how to reduce zero/succ expressions to nat literals.
+* If implemented naively, this type would represent a numeral `n` in unary as a
+  linked list with `n` links, which is horribly inefficient. Instead, the
+  runtime itself has a special representation for `Nat` which stores numbers up
+  to 2^63 directly and larger numbers use an arbitrary precision "bignum"
+  library (usually [GMP](https://gmplib.org/)).
+</code></span></span></span>
+  <span class="unknown token" data-binding="">|</span> <span class="unknown token" data-binding="">0</span> <span class="unknown token" data-binding="">=&gt;</span> <span class="unknown token" data-binding="">0</span>
+  <span class="unknown token" data-binding="">|</span> <span class="var token" data-binding="var-_uniq.294">n<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span> <span class="unknown token" data-binding="">+</span> <span class="unknown token" data-binding="">1</span> <span class="unknown token" data-binding="">=&gt;</span> <span class="const token" data-binding="const-slowId">slowId<span class="hover-container"><span class="hover-info"><code>_root_.slowId : Nat → Nat</code><span class="sep"></span><code class="docstring">A recursive function </code></span></span></span> <span class="var token" data-binding="var-_uniq.294">n<span class="hover-container"><span class="hover-info"><code>Nat</code></span></span></span> <span class="unknown token" data-binding="">+</span> <span class="unknown token" data-binding="">1</span>
+
+<span class="has-info info"><span class="hover-container"><span class="hover-info messages"><code class="message info">5
+</code></span></span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.eval-911">#eval</span></span> <span class="const token" data-binding="const-slowId">slowId<span class="hover-container"><span class="hover-info"><code>slowId : Nat → Nat</code><span class="sep"></span><code class="docstring">A recursive function </code></span></span></span> <span class="unknown token" data-binding="">5</span>
+
+<span class="doc-comment token" data-binding="">/-- An array literal -/</span>
+<span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.example-951">example</span> <span class="unknown token" data-binding="">:=</span> <span class="unknown token" data-binding="">#[</span><span class="unknown token" data-binding="">1</span><span class="unknown token" data-binding="">,</span> <span class="unknown token" data-binding="">2</span><span class="unknown token" data-binding="">,</span> <span class="unknown token" data-binding="">3</span><span class="unknown token" data-binding="">]</span>
+
+<span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.example-974">example</span> <span class="unknown token" data-binding="">:=</span> <span class="unknown token" data-binding="">33</span>
+<span class="unknown token" data-binding=""></span></code><p>
+              I can also prove things about conditionals!</p>
+            <a href="../2024-1-15-conditional-expressions-in-lean" class="read-more">Read more</a></li>
+          </ul>
+        </div>
+      </div>
+    </body>
+  </html>
+
