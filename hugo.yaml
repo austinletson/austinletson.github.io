@@ -74,7 +74,7 @@ params:
   # home-info mode
   homeInfoParams:
     Title: "Welcome to Austin's site"
-    Content: I am a software engineer based in New York City working on data products and devops for formal verification.
+    Content: I am a software engineer based in New York City working on data products for schools and devops for formal verification.
 
   socialIcons:
     - name: github
