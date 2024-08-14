@@ -102,6 +102,12 @@ def resolveDefaultRootModules : IO (Array Name) := do
   return defaultTargetModules
 ```
 
+### Example repo
+
+[Here](https://github.com/austinletson/lake-internal-api-example) is an example repo
+containing some of the above examples.
+You can run `lake test` to view the output of `leanLibs` and `resolveDefaultRootModules`.
+
 ### Warning about stability
 
 Since Lake is under active development, the API is not guaranteed to be stable,
